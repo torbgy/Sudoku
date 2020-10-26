@@ -1,40 +1,47 @@
-import numpy as np
+from random import sample
 #Sudoku generation tips https://dlbeer.co.nz/articles/sudoku.html
 
-print("Initial random sudoku board")
 
-#Generate empty board
-board = np.zeros((9,9))
-print(board)
-#pos_val = [1,2,3,4,5,6,7,8,9]
 
-#setting first box to random numbers
-rng = np.random.default_rng()
-randomFirst = rng.choice(9,size=9, replace=False)
-randomFirstMod = [i+1 for i in randomFirst]
-#print(randomFirst)
-for x in range(3):
-    for y in range(3):
-        board[x][y] = randomFirstMod[y]
-    randomFirstMod = np.delete(randomFirstMod, [0,1,2])
+def pattern(r,c,base): 
+    return (base*(r%base)+r//base+c)%(base*base)
 
-randomFirstMod = [i+1 for i in randomFirst]
-y = 0
-k= 0
-for x in range(3):
-    notInBoard = ~np.in1d(randomFirstMod,board[:3][k])
-    notInBoard = np.array(randomFirstMod)[notInBoard]
-    for y in range(3):        
-        #notInBoard = np.setdiff1d(randomFirstMod,board[:3][y])
-        board[x][y+3] = notInBoard[y]
-    k += 1
-    test = ~np.in1d(randomFirstMod,notInBoard[:3])
-    randomFirstMod = np.array(randomFirstMod)[test]
-    #randomFirstMod = np.delete(randomFirstMod,np.where([randomFirstMod == k for k in notInBoard[:2]]))
+
+def randShuffle(s):
+    return sample(s,len(s))
+
+#Generates a random sudoku board with solution
+def boardGen():
+    base = 3
+    rBase = range(base)
+
+    print("Initial random sudoku board\n")
+    rows = [i*base + r for i in randShuffle(rBase) for r in randShuffle(rBase) ]
+    cols = [i*base + c for i in randShuffle(rBase) for c in randShuffle(rBase) ]
+    numbers = randShuffle(range(1,(base*base)+1))
+
+    return [ [numbers[pattern(r,c,base)] for c in cols] for r in rows ]
+
+#Generator for playable board, difficulty not integrated
+def playBoard(solution):
+    base = 3
+    side = base*base
+    squares = side*side
+
+    board = solution
+    empties = squares * 3//4
+    for p in sample(range(squares), empties):
+        board[p//side][p%side] = 0
     
-print(board)
-print(randomFirstMod)
+    #numSize = len(str(side))
+    return board
 
+#Generate a random sudoku board
+solution = boardGen()
+print("This is the solution \n")
+for line in solution: print(line)
 
-#board[0][:3] = randomFirst[:3]
-#randomFirst = np.delete(randomFirst, [1,2,3])
+#Makes the board playable, difficulty not implemented yet..
+board = playBoard(solution)
+print("This is the playable board\n")
+for line in board: print(line)
