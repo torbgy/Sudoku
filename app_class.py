@@ -114,7 +114,7 @@ class App:
         self.incorrectCells = []
         for yidx,row in enumerate(self.grid):
             for xidx, num in enumerate(row):
-                if num != self.solution[yidx][xidx]:
+                if num != self.solution[yidx][xidx] and num != 0:
                     pos = [(xidx*cellSize)+gridPos[0], (yidx*cellSize)+gridPos[1]]
                     self.incorrectCells.append([xidx, yidx])
                     self.shadeIncorrectCells(self.window, self.incorrectCells)
