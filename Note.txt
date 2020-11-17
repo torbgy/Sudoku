@@ -1,4 +1,7 @@
+Generate random sudoku board
+
 from random import sample
+
 #Sudoku generation tips https://dlbeer.co.nz/articles/sudoku.html
 
 
@@ -45,3 +48,4 @@ for line in solution: print(line)
 board = playBoard(solution)
 print("This is the playable board\n")
 for line in board: print(line)
+
