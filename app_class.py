@@ -8,9 +8,9 @@ class App:
         pygame.init()
         self.window = pygame.display.set_mode((WIDTH, HEIGHT))
         self.running = True
-        self.originalBoard = testBoard2
-        self.grid = deepcopy(self.originalBoard)
-        self.solution = testBoard
+        self.original = boardGen()
+        self.grid = deepcopy(self.original)
+        self.solution = solutionBoard
         self.selected = None
         self.mousePos = None
         self.state = "playing"
@@ -105,7 +105,7 @@ class App:
 
 
     def clearBoard(self):
-        self.grid = deepcopy(self.originalBoard)
+        self.grid = deepcopy(self.original)
         self.incorrectCells = []
         self.load()
 
