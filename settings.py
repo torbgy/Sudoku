@@ -1,5 +1,7 @@
 from random import sample
+from copy import deepcopy
 
+##Window size
 WIDTH = 600
 HEIGHT = 600
 
@@ -39,34 +41,54 @@ originalBoard = [[4,6,9,2,5,7,8,3,1],
 
 
 
-#Variables
+#Global variables
 base = 3
-rBase = range(base)
+randBase = range(base)
 side = base*base
 squares = side*side
 
 
-
 ##Functions
-def pattern(r, c, based):
-    return (based*(r%based)+r//based+c)%(based*based)
+def pattern(r, c):
+    #Check for patterns
+    return (base*(r%base)+r//base+c)%(base*base)
 
 def randShuffle(s):
+    #Returns a random sample of length 3 e.g. [1, 4, 2]
     return sample(s, len(s))
+
 
 def boardGen():
     print("Init: Random board gen")
-    rows = [i*base + r for i in randShuffle(rBase) for r in randShuffle(rBase)]
-    cols = [i*base + c for i in randShuffle(rBase) for c in randShuffle(rBase)]
-    numbers = randShuffle(range(1, (side) + 1))
-    temp = []
-    for c in cols:
-        numbers[pattern(r, c, base)]
-        for r in rows:
-            temp.append(])
-    print(temp)
-    return originalBoard
+    rows = []
+    cols = []
+    solution = []
+    for r in randShuffle(randBase):
+        for i in randShuffle(randBase):
+            rows.append(i*base + r + 1)
 
+    for c in randShuffle(randBase):
+        for i in randShuffle(randBase):
+            cols.append(i*base + c + 1)
+
+    numbers = randShuffle(range(1,(base*base)+1))
+ 
+    for c in cols:
+        tempRow = []
+        for r in rows:
+            tempRow.append(numbers[pattern(r, c)])
+        solution.append(tempRow)
+    print("solution generated")
+    return solution
+
+def playGen(original):
+    print("Creating playing board")
+    playBoard = deepcopy(original)
+    empties = squares * 3//4
+
+    for i in sample(range(squares), empties):
+        playBoard[i//side][i%side] = 0
+    return playBoard
 
 
 #playingBoard = testBoard2

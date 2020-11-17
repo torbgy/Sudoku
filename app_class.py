@@ -8,9 +8,9 @@ class App:
         pygame.init()
         self.window = pygame.display.set_mode((WIDTH, HEIGHT))
         self.running = True
-        self.original = boardGen()
+        self.solution = boardGen()
+        self.original = playGen(self.solution)
         self.grid = deepcopy(self.original)
-        self.solution = solutionBoard
         self.selected = None
         self.mousePos = None
         self.state = "playing"

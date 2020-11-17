@@ -9,15 +9,14 @@ Working:
 - Buttons: Check and Clear
 - Only numbers allowed in cells
 - Locked numbers cannot be selected and changed
-
-
-In progress:
 - Random board gen (w/o difficulty)
 
 
-Future:
+In progress:
 - Menu screen
 - Finish screen
+
+Future:
 - Possiblity to add noted numbers and clear them when changing another cell
 - Difficulty
 - Store and continue option
